@@ -1,0 +1,40 @@
+{
+    "name": "sbaai_tiw8",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://forge.univ-lyon1.fr/p1807434/sbaai_tiw8.git",
+    "author": "Aziz <abdelazizsbaai@gmail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "eslint-webpack-plugin": "^3.0.1",
+        "express": "^4.17.1"
+    },
+    "scripts": {
+        "start": "node server/index.js",
+        "test": "echo \"Error: pas de tests pour le moment\" && exit 1",
+        "build": "webpack --mode production",
+        "dev": "webpack --mode development && node server/index.js"
+    },
+    "devDependencies": {
+        "@types/react": "^17.0.21",
+        "@types/react-dom": "^17.0.9",
+        "@typescript-eslint/eslint-plugin": "^4.31.1",
+        "@typescript-eslint/parser": "^4.31.1",
+        "css-loader": "^6.2.0",
+        "eslint": "^7.32.0",
+        "eslint-config-standard": "^16.0.3",
+        "eslint-plugin-import": "^2.24.2",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^5.1.0",
+        "eslint-plugin-react": "^7.25.1",
+        "html-webpack-plugin": "^5.3.2",
+        "mini-css-extract-plugin": "^2.3.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "source-map-loader": "^3.0.0",
+        "ts-loader": "^9.2.5",
+        "typescript": "^4.4.3",
+        "webpack": "^5.53.0",
+        "webpack-cli": "^4.8.0"
+    }
+}
