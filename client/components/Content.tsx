@@ -1,12 +1,22 @@
-// eslint-disable-next-line no-use-before-define
-import React = require('react')
-import TYLER from '../img/simple.jpg'
+import { Button, WindmillContext } from '@windmill/react-ui'
+import * as React from 'react'
+import { useContext } from 'react'
 
 const Content = () => {
+  const { mode, toggleMode } = useContext(WindmillContext)
   return (
-    <div>
-      <img src={TYLER} alt="logo" />
-    </div>
+    <>
+      <Button
+        onClick={() => {
+          toggleMode()
+          console.log(toggleMode)
+          console.log(mode)
+        }}
+      >
+        Toggle Theme
+      </Button>
+      <p>Current theme is : {mode}</p>
+    </>
   )
 }
 export default Content

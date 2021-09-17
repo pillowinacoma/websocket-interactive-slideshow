@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-use-before-define
-import React = require('react')
+import * as React from 'react'
 
 const Header = () => {
   return <div>Header</div>
