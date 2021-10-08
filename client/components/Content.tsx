@@ -6,15 +6,7 @@ const Content = () => {
   const { mode, toggleMode } = useContext(WindmillContext)
   return (
     <>
-      <Button
-        onClick={() => {
-          toggleMode()
-          console.log(toggleMode)
-          console.log(mode)
-        }}
-      >
-        Toggle Theme
-      </Button>
+      <Button onClick={toggleMode}>Toggle Theme</Button>
       <p>Current theme is : {mode}</p>
     </>
   )

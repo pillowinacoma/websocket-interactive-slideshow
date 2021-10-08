@@ -3,7 +3,7 @@ const path = require('path')
 const ESLintPlugin = require('eslint-webpack-plugin')
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './client/index.html',
-  filename: './index.html',
+  filename: './index.html'
 })
 module.exports = (env, argv) => {
   console.log(argv.mode)
@@ -12,13 +12,13 @@ module.exports = (env, argv) => {
     entry: './client/index.tsx',
     output: {
       path: path.join(__dirname, 'dist'),
-      filename: 'bundle.js',
+      filename: 'bundle.js'
     },
     plugins: [
       htmlPlugin,
       new ESLintPlugin({
-        extensions: ['js', 'jsx', 'ts', 'tsx'],
-      }),
+        extensions: ['js', 'jsx', 'ts', 'tsx']
+      })
     ],
     module: {
       rules: [
@@ -26,18 +26,18 @@ module.exports = (env, argv) => {
           test: /\.(ts|tsx)$/,
           exclude: /node_modules/,
           use: {
-            loader: 'ts-loader',
-          },
+            loader: 'ts-loader'
+          }
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
           loader: 'file-loader',
-          options: { name: '/static/[name].[ext]' },
-        },
-      ],
+          options: { name: '/static/[name].[ext]' }
+        }
+      ]
     },
     resolve: {
-      extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
-    },
+      extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
+    }
   }
 }

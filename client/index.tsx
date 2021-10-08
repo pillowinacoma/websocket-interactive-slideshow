@@ -13,7 +13,7 @@ const Index = () => {
   )
 }
 ReactDOM.render(
-  <Windmill>
+  <Windmill usePreferences >
     <Index />
   </Windmill>,
   document.getElementById('root')
