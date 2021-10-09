@@ -1,9 +1,9 @@
 const windmill = require('@windmill/react-ui/config')
 module.exports = windmill({
-  purge: [],
+  purge: ['./client/**/*.tsx'],
   theme: {
-    extend: {},
+    extend: {}
   },
   variants: {},
-  plugins: [],
+  plugins: []
 })

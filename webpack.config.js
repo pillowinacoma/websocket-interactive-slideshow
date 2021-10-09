@@ -33,6 +33,11 @@ module.exports = (env, argv) => {
           test: /\.(png|svg|jpg|gif)$/,
           loader: 'file-loader',
           options: { name: '/static/[name].[ext]' }
+        },
+        {
+          test: /\.css$/i,
+          include: path.resolve(__dirname, 'client'),
+          use: ['style-loader', 'css-loader', 'postcss-loader']
         }
       ]
     },

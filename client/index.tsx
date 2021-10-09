@@ -2,19 +2,12 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Windmill } from '@windmill/react-ui'
-import Header from './components/Header'
-import Content from './components/Content'
-const Index = () => {
-  return (
-    <div className="container">
-      <Header />
-      <Content />
-    </div>
-  )
-}
+import App from './App'
+import './style.css'
+
 ReactDOM.render(
-  <Windmill usePreferences >
-    <Index />
+  <Windmill usePreferences>
+    <App />
   </Windmill>,
   document.getElementById('root')
 )
