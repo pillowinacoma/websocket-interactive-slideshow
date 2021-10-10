@@ -3,7 +3,6 @@ import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { Slide } from '../type'
 import { frameSlideIndex } from '../utils/slideId'
-import image from '../img/simple.jpg'
 import { useParams } from 'react-router-dom'
 
 interface Props {
@@ -36,7 +35,7 @@ const SlideShow: React.FC<Props> = ({ slideData }) => {
       <Card className="relative w-full">
         <div className="carousel bg-gray-300 dark:bg-gray-800">
           <div className="flex justify-center content-center">
-            <img className="w-1/2 " src={image} />
+            <img className="md:h-96 " src={thisSlide.img} />
           </div>
           <CardBody className="w-full flex-shrink-0">
             <p className="mb-4 font-semibold text-cool-gray-600 dark:text-gray-300">

@@ -3,5 +3,6 @@ export interface Slide {
   title: string
   text: string
   visible: boolean
+  img: string
   notes: string
 }
