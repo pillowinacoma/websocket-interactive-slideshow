@@ -43,6 +43,7 @@ module.exports = (env, argv) => {
     },
     resolve: {
       extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
-    }
+    },
+    devtool: 'eval-source-map'
   }
 }
