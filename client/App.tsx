@@ -9,13 +9,20 @@ const App: React.FC = () => {
   const [slideData] = React.useState(initialSlides)
 
   return (
-    <div className="app">
+    <div className="app dark:bg-gray-800">
       <HashRouter>
         <Switch>
-          <Route exact path="/:stringSlideId?">
-            <Content/>
-            <SlideShow slideData={slideData} />
-            <AppToolbar slideData={slideData} />
+          <Route exact path="/:stringSlideId">
+            <div className="grid grid-cols-3 grid-rows-20 gap-0">
+              <Content />
+              <AppToolbar slideData={slideData} />
+              <div className="flex justify-center h-full w-full col-span-3 row-span-20">
+                <SlideShow slideData={slideData} />
+              </div>
+            </div>
+          </Route>
+          <Route exact path="/">
+            <Content />
           </Route>
         </Switch>
       </HashRouter>
