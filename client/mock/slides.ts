@@ -22,7 +22,7 @@ export const initialSlides: Slide[] = [
     title: 'TP 2',
     text: "Phasellizzle interdum go to hizzle shizzlin dizzle. Ut own yo' adipiscing get down get down. Donizzle non for sure. Own yo' sapien nizzle, ultricizzle nizzle, accumsizzle tellivizzle, fermentizzle quizzle, nizzle. Dizzle nec libero. Etizzle ma nizzle ornare ante. Maurizzle fo shizzle mah nizzle fo rizzle, mah home g-dizzle. Vestibulum ut pede dawg nibh i'm in the shizzle commodo. Doggy shizzlin dizzle daahng dawg phat own yo', consectetizzle away elit. Sed izzle mi. Da bomb mi sizzle, sodalizzle izzle, rizzle a, eleifend shizzle my nizzle crocodizzle, shiznit.",
     visible: true,
-    img: 'https://lh3.googleusercontent.com/proxy/4I6r_BFnus2L_mFLM9QEnIj01TPXqf58z32qpysiCnaAZBSRw4vdFRS65HaFIV9tHATLf-O4uMKJue9crUEny-wNOo-p0Zx1uk1LF2xHclgJzY1pwIlU5A8EC_857RlbgsZsNL1jKBSjCHDpk7FzIg',
+    img: 'https://i.redd.it/td006ond5rn21.jpg',
     notes: ''
   },
   {

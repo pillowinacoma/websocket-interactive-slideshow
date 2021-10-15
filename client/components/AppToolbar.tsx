@@ -17,8 +17,10 @@ const AppToolbar: React.FC<Props> = ({ slideData }) => {
   const { stringSlideId } = useParams<ParamTypes>()
   const [slideId, setSlideId] = useState(frameSlideIndex(stringSlideId, LIMIT))
   const [isDDOpen, setIsDDOpen] = useState(false)
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   const [slides] = useState(slideData)
   const [thisSlide, setThisSlide] = useState(slides[slideId])
+  // const [isAMOpen, setIsAMOpen] = useState(false)
 
   const goNext = (n: number) => (n + 1 < LIMIT ? n + 1 : LIMIT - 1)
   const goPrevious = (n: number) => (n - 1 >= 0 ? n - 1 : 0)
@@ -46,47 +48,67 @@ const AppToolbar: React.FC<Props> = ({ slideData }) => {
     ))
 
   return (
-    <div className="col-span-3 grid grid-cols-3 grid-rows-1 md:max-h-16 p-0 m-0">
-      <div className="">
-        <Link to={`/${goPrevious(slideId)}`}>
+    <>
+      <div className="col-span-3 grid grid-cols-3 grid-rows-1 md:max-h-16 p-0 m-0">
+        <div className="">
+          <Link to={`/${goPrevious(slideId)}`}>
+            <Button
+              className=" h-full w-full rounded-t-sm rounded-b-sm dark:bg-cool-gray-800 "
+              layout="outline"
+              to={`/${goPrevious(slideId)}`}
+            >
+              {'<'}
+            </Button>
+          </Link>
+        </div>
+        <div className="">
           <Button
-            className=" h-full w-full rounded-t-sm rounded-b-sm dark:bg-cool-gray-800 "
+            className="h-full href-full w-full rounded-t-sm rounded-b-sm dark:bg-cool-gray-800"
             layout="outline"
-            to={`/${goPrevious(slideId)}`}
+            onClick={() => setIsDDOpen(!isDDOpen)}
+            aria-haspopup="true"
           >
-            {'<'}
+            {thisSlide.title}
           </Button>
-        </Link>
-      </div>
-      <div className="">
-        <Button
-          className="h-full href-full w-full rounded-t-sm rounded-b-sm dark:bg-cool-gray-800"
-          layout="outline"
-          onClick={() => setIsDDOpen(!isDDOpen)}
-          aria-haspopup="true"
-        >
-          {thisSlide.title}
-        </Button>
-        <Dropdown
-          className="z-10 w-full "
-          align="left"
-          isOpen={isDDOpen}
-          onClose={() => {}}
-        >
-          {makeDropdownItems(slides)}
-        </Dropdown>
-      </div>
-      <div>
-        <Link to={`/${goNext(slideId)}`}>
-          <Button
-            layout="outline"
-            className="right w-full h-full rounded-t-sm rounded-b-sm dark:bg-cool-gray-800"
+          <Dropdown
+            className="z-10 w-full "
+            align="left"
+            isOpen={isDDOpen}
+            onClose={() => {}}
           >
-            {'>'}
-          </Button>
-        </Link>
+            {makeDropdownItems(slides)}
+          </Dropdown>
+        </div>
+        <div>
+          <Link to={`/${goNext(slideId)}`}>
+            <Button
+              layout="outline"
+              className="right w-full h-full rounded-t-sm rounded-b-sm dark:bg-cool-gray-800"
+            >
+              {'>'}
+            </Button>
+          </Link>
+        </div>
       </div>
-    </div>
+      <div className="flex justify-center items-baseline col-span-3 md:max-h-10 p-0 dark:text-cool-gray-50">
+        <div
+          onClick={() => setIsOptionsOpen(!isOptionsOpen)}
+          className="flex justify-center p-0 m-0 w-full h-full "
+        >
+          ...
+          <Dropdown
+            className="z-10 w-full flex justify-around"
+            align="left"
+            isOpen={isOptionsOpen}
+            onClose={() => {}}
+          >
+            <DropdownItem>Accueil</DropdownItem>
+            <DropdownItem>Ajouter</DropdownItem>
+            <DropdownItem>Modifier</DropdownItem>
+          </Dropdown>
+        </div>
+      </div>
+    </>
   )
 }
 export default AppToolbar

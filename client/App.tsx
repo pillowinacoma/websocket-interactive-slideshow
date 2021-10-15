@@ -10,7 +10,7 @@ const App: React.FC = () => {
   const [slideData] = React.useState(initialSlides)
 
   return (
-    <div className="app dark:bg-gray-800">
+    <div className="app dark:bg-gray-800 bg-gray-300">
       <HashRouter>
         <Switch>
           <Route exact path="/:stringSlideId">

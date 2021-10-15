@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom'
 interface Props {
   slideData: Slide[]
 }
+
 interface ParamTypes {
   stringSlideId: string
 }
