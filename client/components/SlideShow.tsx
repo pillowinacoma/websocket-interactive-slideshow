@@ -1,51 +1,35 @@
 import { Card, CardBody } from '@windmill/react-ui'
 import * as React from 'react'
-import { useEffect, useState } from 'react'
 import { Slide } from '../type'
-import { frameSlideIndex } from '../utils/slideId'
-import { useParams } from 'react-router-dom'
 
 interface Props {
-  slideData: Slide[]
+  slides: Slide[]
+  currentSlideId: number
 }
 
-interface ParamTypes {
-  stringSlideId: string
-}
-
-const SlideShow: React.FC<Props> = ({ slideData }) => {
-  const { stringSlideId } = useParams<ParamTypes>()
-  const LIMIT = slideData.length
-  const [slideId, setSlideId] = useState(
-    frameSlideIndex(Number(stringSlideId), LIMIT)
-  )
-  const [slides] = useState(slideData)
-  const [thisSlide, setThisSlide] = useState(slides[slideId])
-
-  useEffect(() => {
-    setSlideId(frameSlideIndex(stringSlideId, LIMIT))
-    console.log(slideId)
-  }, [stringSlideId])
-
-  useEffect(() => {
-    setThisSlide(slides[slideId])
-  }, [slideId])
+const SlideShow: React.FC<Props> = ({ slides, currentSlideId }) => {
+  const currentSlide = slides[currentSlideId]
+  const opacity: string = currentSlide.visible ? 'opacity-10' : 'opacity-100'
 
   return (
     <div className="p-10 flex justify-center w-screen  items-center">
-      <Card className="relative w-full">
-        <div className="carousel bg-gray-300 dark:bg-gray-800">
-          <div className="flex justify-center content-center">
-            <img className="md:h-96 sm:h-auto" src={thisSlide.img} />
+      <div className={opacity}>
+        <Card className="relative w-full">
+          <div className="carousel bg-gray-300 dark:bg-gray-800">
+            <div className="flex justify-center content-center">
+              <img className="md:h-96 sm:h-auto" src={currentSlide.img} />
+            </div>
+            <CardBody className="w-full flex-shrink-0">
+              <p className="mb-4 font-semibold text-cool-gray-600 dark:text-gray-300">
+                {currentSlide.title}
+              </p>
+              <p className="text-gray-600 dark:text-gray-400">
+                {currentSlide.text}
+              </p>
+            </CardBody>
           </div>
-          <CardBody className="w-full flex-shrink-0">
-            <p className="mb-4 font-semibold text-cool-gray-600 dark:text-gray-300">
-              {thisSlide.title}
-            </p>
-            <p className="text-gray-600 dark:text-gray-400">{thisSlide.text}</p>
-          </CardBody>
-        </div>
-      </Card>
+        </Card>
+      </div>
     </div>
   )
 }

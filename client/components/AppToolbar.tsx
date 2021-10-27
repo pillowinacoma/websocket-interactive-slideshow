@@ -1,37 +1,33 @@
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../store'
+import {
+  changeVisibilitySlide,
+  nextSlide,
+  previousSlide
+} from '../slices/slideShowSlice'
+
 import { Badge, Button, Dropdown, DropdownItem } from '@windmill/react-ui'
 import * as React from 'react'
-import { useState, useEffect } from 'react'
-import { frameSlideIndex } from '../utils/slideId'
-import { Link, useParams } from 'react-router-dom'
+import { useState } from 'react'
 import { Slide } from '../type'
+import AjouterModal from './AjouterModal'
 
 interface Props {
   slideData: Slide[]
-}
-interface ParamTypes {
-  stringSlideId: string
+  currentSlideId: number
 }
 
-const AppToolbar: React.FC<Props> = ({ slideData }) => {
-  const LIMIT = slideData.length
-  const { stringSlideId } = useParams<ParamTypes>()
-  const [slideId, setSlideId] = useState(frameSlideIndex(stringSlideId, LIMIT))
+const AppToolbar: React.FC<Props> = ({ slideData, currentSlideId }) => {
+  const dispatch = useDispatch<AppDispatch>()
   const [isDDOpen, setIsDDOpen] = useState(false)
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [slides] = useState(slideData)
-  const [thisSlide, setThisSlide] = useState(slides[slideId])
-  // const [isAMOpen, setIsAMOpen] = useState(false)
+  const [currentSlide] = useState(slides[currentSlideId])
 
-  const goNext = (n: number) => (n + 1 < LIMIT ? n + 1 : LIMIT - 1)
-  const goPrevious = (n: number) => (n - 1 >= 0 ? n - 1 : 0)
+  const goNext = () => dispatch(nextSlide())
 
-  useEffect(() => {
-    setSlideId(frameSlideIndex(stringSlideId, LIMIT))
-  }, [stringSlideId])
-
-  useEffect(() => {
-    setThisSlide(slides[slideId])
-  }, [slideId])
+  const goPrevious = () => dispatch(previousSlide())
 
   const makeDropdownItems = (data: Slide[]) =>
     data.map((daton: Slide, idx: number) => (
@@ -51,15 +47,13 @@ const AppToolbar: React.FC<Props> = ({ slideData }) => {
     <>
       <div className="col-span-3 grid grid-cols-3 grid-rows-1 md:max-h-16 p-0 m-0">
         <div className="">
-          <Link to={`/${goPrevious(slideId)}`}>
-            <Button
-              className=" h-full w-full rounded-t-sm rounded-b-sm dark:bg-cool-gray-800 "
-              layout="outline"
-              to={`/${goPrevious(slideId)}`}
-            >
-              {'<'}
-            </Button>
-          </Link>
+          <Button
+            onClick={() => goPrevious()}
+            className=" h-full w-full rounded-t-sm rounded-b-sm dark:bg-cool-gray-800 "
+            layout="outline"
+          >
+            {'<'}
+          </Button>
         </div>
         <div className="">
           <Button
@@ -68,7 +62,7 @@ const AppToolbar: React.FC<Props> = ({ slideData }) => {
             onClick={() => setIsDDOpen(!isDDOpen)}
             aria-haspopup="true"
           >
-            {thisSlide.title}
+            {currentSlide.title}
           </Button>
           <Dropdown
             className="z-10 w-full "
@@ -80,14 +74,13 @@ const AppToolbar: React.FC<Props> = ({ slideData }) => {
           </Dropdown>
         </div>
         <div>
-          <Link to={`/${goNext(slideId)}`}>
-            <Button
-              layout="outline"
-              className="right w-full h-full rounded-t-sm rounded-b-sm dark:bg-cool-gray-800"
-            >
-              {'>'}
-            </Button>
-          </Link>
+          <Button
+            onClick={() => goNext()}
+            layout="outline"
+            className="right w-full h-full rounded-t-sm rounded-b-sm dark:bg-cool-gray-800"
+          >
+            {'>'}
+          </Button>
         </div>
       </div>
       <div className="flex justify-center items-baseline col-span-3 md:max-h-10 p-0 dark:text-cool-gray-50">
@@ -97,18 +90,28 @@ const AppToolbar: React.FC<Props> = ({ slideData }) => {
         >
           ...
           <Dropdown
-            className="z-10 w-full flex justify-around"
+            className="z-10 w-full "
             align="left"
             isOpen={isOptionsOpen}
             onClose={() => {}}
           >
             <DropdownItem>Accueil</DropdownItem>
-            <DropdownItem>Ajouter</DropdownItem>
-            <DropdownItem>Modifier</DropdownItem>
+            <DropdownItem
+              onClick={() => {
+                dispatch(changeVisibilitySlide(currentSlideId))
+              }}
+            >
+              Cacher
+            </DropdownItem>
+            <DropdownItem onClick={() => setIsAddModalOpen(true)}>
+              Ajouter
+            </DropdownItem>
           </Dropdown>
         </div>
       </div>
+      <AjouterModal data={[]} isOpen={isAddModalOpen} />
     </>
   )
 }
+
 export default AppToolbar
