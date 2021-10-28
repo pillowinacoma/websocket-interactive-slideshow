@@ -22,6 +22,7 @@ const AppToolbar: React.FC<Props> = ({ slideData, currentSlideId }) => {
   const [isDDOpen, setIsDDOpen] = useState(false)
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [slides] = useState(slideData)
   const [currentSlide] = useState(slides[currentSlideId])
 
@@ -103,13 +104,25 @@ const AppToolbar: React.FC<Props> = ({ slideData, currentSlideId }) => {
             >
               Cacher
             </DropdownItem>
+            <DropdownItem onClick={() => setIsEditModalOpen(true)}>
+              Modifier
+            </DropdownItem>
             <DropdownItem onClick={() => setIsAddModalOpen(true)}>
               Ajouter
             </DropdownItem>
           </Dropdown>
         </div>
       </div>
-      <AjouterModal data={[]} isOpen={isAddModalOpen} />
+      {isAddModalOpen && (
+        <AjouterModal closeModal={() => setIsAddModalOpen(false)} />
+      )}
+      {isEditModalOpen && (
+        <AjouterModal
+          closeModal={() => setIsEditModalOpen(false)}
+          initData={currentSlide}
+          slideId={currentSlideId}
+        />
+      )}
     </>
   )
 }
