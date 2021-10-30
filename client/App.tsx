@@ -15,7 +15,7 @@ const App: React.FC = () => {
       <HashRouter>
         <Switch>
           <Route exact path="/:stringSlideId">
-            <div className="static grid grid-cols-1 grid-rows-20 gap-0 md:h-screen">
+            <div className="static grid grid-cols-1 grid-rows-20 gap-0 h-screen">
               <div className=" bottom-0 right-0 left-0">
                 <ThemeToggle />
                 <AppToolbar
