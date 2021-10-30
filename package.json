@@ -10,9 +10,11 @@
     "@types/react-redux": "^7.1.19",
     "@types/react-router-dom": "^5.3.1",
     "@windmill/react-ui": "^0.6.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-webpack-plugin": "^3.0.1",
     "express": "^4.17.1",
+    "faker": "^5.5.3",
     "file-loader": "^6.2.0",
     "install": "^0.13.0",
     "postcss": "^8.3.9",
@@ -34,6 +36,7 @@
     "watch": "webpack --watch"
   },
   "devDependencies": {
+    "@types/faker": "^5.5.9",
     "@types/react": "^17.0.21",
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^4.31.1",

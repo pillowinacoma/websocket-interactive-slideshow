@@ -3,14 +3,22 @@ import { AppDispatch } from '../store'
 import {
   changeVisibilitySlide,
   nextSlide,
-  previousSlide
+  previousSlide,
+  removeSlide
 } from '../slices/slideShowSlice'
 
 import { Badge, Button, Dropdown, DropdownItem } from '@windmill/react-ui'
 import * as React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Slide } from '../type'
 import AjouterModal from './AjouterModal'
+import {
+  EditIcon,
+  EyeIcon,
+  EyeOffIcon,
+  PlusIcon,
+  MinusIcon
+} from '../utils/Icons'
 
 interface Props {
   slideData: Slide[]
@@ -23,8 +31,11 @@ const AppToolbar: React.FC<Props> = ({ slideData, currentSlideId }) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-  const [slides] = useState(slideData)
-  const [currentSlide] = useState(slides[currentSlideId])
+  const [currentSlide, setCurrentSlide] = useState(slideData[currentSlideId])
+
+  useEffect(() => {
+    setCurrentSlide(slideData[currentSlideId])
+  }, [currentSlideId, slideData[currentSlideId]])
 
   const goNext = () => dispatch(nextSlide())
 
@@ -71,7 +82,7 @@ const AppToolbar: React.FC<Props> = ({ slideData, currentSlideId }) => {
             isOpen={isDDOpen}
             onClose={() => {}}
           >
-            {makeDropdownItems(slides)}
+            {makeDropdownItems(slideData)}
           </Dropdown>
         </div>
         <div>
@@ -87,30 +98,38 @@ const AppToolbar: React.FC<Props> = ({ slideData, currentSlideId }) => {
       <div className="flex justify-center items-baseline col-span-3 md:max-h-10 p-0 dark:text-cool-gray-50">
         <div
           onClick={() => setIsOptionsOpen(!isOptionsOpen)}
-          className="flex justify-center p-0 m-0 w-full h-full "
+          className="flex justify-around p-0 m-0 w-full h-full "
         >
-          ...
-          <Dropdown
-            className="z-10 w-full "
-            align="left"
-            isOpen={isOptionsOpen}
-            onClose={() => {}}
+          <Button
+            layout="outline"
+            icon={currentSlide.visible ? EyeOffIcon : EyeIcon}
+            onClick={() => {
+              dispatch(changeVisibilitySlide(currentSlideId))
+            }}
           >
-            <DropdownItem>Accueil</DropdownItem>
-            <DropdownItem
-              onClick={() => {
-                dispatch(changeVisibilitySlide(currentSlideId))
-              }}
-            >
-              Cacher
-            </DropdownItem>
-            <DropdownItem onClick={() => setIsEditModalOpen(true)}>
-              Modifier
-            </DropdownItem>
-            <DropdownItem onClick={() => setIsAddModalOpen(true)}>
-              Ajouter
-            </DropdownItem>
-          </Dropdown>
+            {currentSlide.visible ? 'Cacher' : 'Montrer'}
+          </Button>
+          <Button
+            layout="outline"
+            icon={EditIcon}
+            onClick={() => setIsEditModalOpen(true)}
+          >
+            Modifier
+          </Button>
+          <Button
+            icon={MinusIcon}
+            layout="outline"
+            onClick={() => dispatch(removeSlide())}
+          >
+            Supprimer
+          </Button>
+          <Button
+            icon={PlusIcon}
+            layout="outline"
+            onClick={() => setIsAddModalOpen(true)}
+          >
+            Ajouter
+          </Button>
         </div>
       </div>
       {isAddModalOpen && (

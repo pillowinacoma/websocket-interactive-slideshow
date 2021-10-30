@@ -9,7 +9,7 @@ interface Props {
 
 const SlideShow: React.FC<Props> = ({ slides, currentSlideId }) => {
   const currentSlide = slides[currentSlideId]
-  const opacity: string = currentSlide.visible ? 'opacity-10' : 'opacity-100'
+  const opacity: string = !currentSlide.visible ? 'opacity-10' : 'opacity-100'
 
   return (
     <div className="p-10 flex justify-center w-screen  items-center">

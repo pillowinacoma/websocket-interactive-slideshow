@@ -15,12 +15,14 @@ const App: React.FC = () => {
       <HashRouter>
         <Switch>
           <Route exact path="/:stringSlideId">
-            <div className="grid grid-cols-3 grid-rows-20 gap-0 md:h-screen">
-              <ThemeToggle />
-              <AppToolbar
-                slideData={slideData}
-                currentSlideId={currentSlideId}
-              />
+            <div className="static grid grid-cols-1 grid-rows-20 gap-0 md:h-screen">
+              <div className=" bottom-0 right-0 left-0">
+                <ThemeToggle />
+                <AppToolbar
+                  slideData={slideData}
+                  currentSlideId={currentSlideId}
+                />
+              </div>
               <div className="flex justify-center h-full w-full col-span-3 row-span-20">
                 <SlideShow slides={slideData} currentSlideId={currentSlideId} />
               </div>
