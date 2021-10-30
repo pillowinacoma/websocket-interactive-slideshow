@@ -98,38 +98,30 @@ const AppToolbar: React.FC<Props> = ({ slideData, currentSlideId }) => {
       <div className="flex justify-center items-baseline col-span-3 md:max-h-10 p-0 dark:text-cool-gray-50">
         <div
           onClick={() => setIsOptionsOpen(!isOptionsOpen)}
-          className="flex justify-around p-0 m-0 w-full h-full "
+          className="flex justify-evenly p-0 m-0 w-full h-full "
         >
           <Button
-            layout="outline"
+            layout="link"
             icon={currentSlide.visible ? EyeOffIcon : EyeIcon}
             onClick={() => {
               dispatch(changeVisibilitySlide(currentSlideId))
             }}
-          >
-            {currentSlide.visible ? 'Cacher' : 'Montrer'}
-          </Button>
+          ></Button>
           <Button
-            layout="outline"
+            layout="link"
             icon={EditIcon}
             onClick={() => setIsEditModalOpen(true)}
-          >
-            Modifier
-          </Button>
+          ></Button>
           <Button
             icon={MinusIcon}
-            layout="outline"
+            layout="link"
             onClick={() => dispatch(removeSlide())}
-          >
-            Supprimer
-          </Button>
+          ></Button>
           <Button
             icon={PlusIcon}
-            layout="outline"
+            layout="link"
             onClick={() => setIsAddModalOpen(true)}
-          >
-            Ajouter
-          </Button>
+          ></Button>
         </div>
       </div>
       {isAddModalOpen && (
