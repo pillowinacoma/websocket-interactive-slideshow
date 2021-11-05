@@ -18,6 +18,7 @@
     "faker": "^5.5.3",
     "file-loader": "^6.2.0",
     "install": "^0.13.0",
+    "nodemon": "^2.0.14",
     "postcss": "^8.3.9",
     "postcss-loader": "^6.1.1",
     "postcss-preset-env": "^6.7.0",
@@ -36,7 +37,7 @@
     "start": "node server/index.js",
     "test": "echo \"Error: pas de tests pour le moment\" && exit 1",
     "build": "webpack --mode production",
-    "dev": "webpack --mode development & node server/index.js",
+    "dev": "webpack --mode development & nodemon server/index.js",
     "watch": "webpack --watch"
   },
   "devDependencies": {

@@ -1,10 +1,27 @@
 import { io } from 'socket.io-client'
 import { Middleware, Dispatch, AnyAction } from 'redux'
+import { store } from '../store'
+import { nextSlide, previousSlide, setSlide } from '../slices/slideShowSlice'
 
-const socket = io('http://localhost:3000')
+const socket = io()
 
 socket.on('action', (msg) => {
   console.log('MESSAGE', msg)
+  switch (msg.type) {
+    case 'nextSlide':
+      store.dispatch(nextSlide(null, false))
+      break
+    case 'previousSlide':
+      store.dispatch(previousSlide(null, false))
+      break
+    case 'setSlide':
+      store.dispatch(setSlide(msg.value, false))
+      break
+    default:
+      console.log('socket middleware : message type is not listed')
+
+      break
+  }
 })
 
 export const actionMiddlleware: Middleware<Dispatch> =

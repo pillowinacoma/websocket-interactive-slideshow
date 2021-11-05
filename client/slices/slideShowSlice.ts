@@ -43,7 +43,11 @@ export const slideshowSlice = createSlice({
       })
     },
     setSlide: {
-      reducer: (state, action: PayloadAction<number>) => {},
+      reducer: (state, action: PayloadAction<number>) => {
+        action.payload < state.slides.length &&
+          action.payload >= 0 &&
+          (state.currentSlideId = action.payload)
+      },
       prepare: (payload: number, propagate: boolean) => ({
         payload,
         meta: propagate
