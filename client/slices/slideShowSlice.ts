@@ -24,14 +24,34 @@ export const slideshowSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    nextSlide: (state) => {
-      state.currentSlideId < state.slides.length - 1 && state.currentSlideId++
+    nextSlide: {
+      reducer: (state, action: null) => {
+        state.currentSlideId < state.slides.length - 1 && state.currentSlideId++
+      },
+      prepare: (payload: null, propagate: boolean) => ({
+        payload,
+        meta: propagate
+      })
     },
-    previousSlide: (state) => {
-      state.currentSlideId > 0 && state.currentSlideId--
+    previousSlide: {
+      reducer: (state, action: null) => {
+        state.currentSlideId > 0 && state.currentSlideId--
+      },
+      prepare: (payload: null, propagate: boolean) => ({
+        payload,
+        meta: propagate
+      })
     },
-    setSlide: (state, action: PayloadAction<number>) => {
-      state.currentSlideId = action.payload
+    setSlide: {
+      reducer: (state, action: PayloadAction<number>) => {
+        action.payload < state.slides.length &&
+          action.payload >= 0 &&
+          (state.currentSlideId = action.payload)
+      },
+      prepare: (payload: number, propagate: boolean) => ({
+        payload,
+        meta: propagate
+      })
     },
     changeVisibilitySlide: (state, action: PayloadAction<number>) => {
       state.slides[action.payload].visible =
@@ -41,17 +61,25 @@ export const slideshowSlice = createSlice({
       state.slides.push(action.payload)
     },
     removeSlide: (state) => {
-      if (
-        state.currentSlideId < state.slides.length - 1 &&
-        state.currentSlideId >= 0
-      ) {
+      if (state.slides.length > 0) {
         state.slides = state.slides.filter(
           (val, idx) => idx !== state.currentSlideId
         )
+        if (state.currentSlideId > state.slides.length - 1) {
+          state.currentSlideId = state.slides.length - 1
+        }
+        if (state.currentSlideId < 0) {
+          state.currentSlideId = 0
+        }
       }
     },
     editSlide: (state, action: PayloadAction<SingleSlideState>) => {
       state.slides[action.payload.id] = action.payload.slide
+    },
+    resetSlides: (state) => {
+      if (state.slides.length === 0) {
+        state.slides = initialSlides
+      }
     }
   }
 })
@@ -63,6 +91,7 @@ export const {
   changeVisibilitySlide,
   addSlide,
   removeSlide,
-  editSlide
+  editSlide,
+  resetSlides
 } = slideshowSlice.actions
 export default slideshowSlice.reducer

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import slideshowReducer from '../slices/slideShowSlice' // chemin à adapter
+import { actionMiddlleware } from '../middleware/socketMiddleware'
 
 /* eslint-disable no-underscore-dangle */
 export const store = configureStore({
   reducer: slideshowReducer,
+  middleware: [actionMiddlleware],
   devTools: true
 })
 

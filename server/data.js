@@ -1,9 +1,8 @@
-import * as faker from 'faker'
-import { Slide } from '../type'
-const initialSlides: Slide[] = []
+const faker = require('faker')
+const data = []
 
 for (let index = 0; index < 10; index++) {
-  initialSlides.push({
+  data.push({
     type: faker.animal.dog(),
     title: faker.animal.bear(),
     text: faker.lorem.paragraphs(5, '\n'),
@@ -13,4 +12,4 @@ for (let index = 0; index < 10; index++) {
   })
 }
 
-export { initialSlides }
+module.exports = data
