@@ -9,6 +9,10 @@ module.exports = (env, argv) => {
   console.log(argv.mode)
   return {
     watch: argv.mode !== 'production',
+    watchOptions: {
+      poll: true,
+      ignored: /node_modules/
+    },
     entry: './client/index.tsx',
     output: {
       path: path.join(__dirname, 'dist'),
