@@ -4,7 +4,8 @@ import {
   changeVisibilitySlide,
   nextSlide,
   previousSlide,
-  removeSlide
+  removeSlide,
+  setSlide
 } from '../slices/slideShowSlice'
 
 import { Badge, Button, Dropdown, DropdownItem } from '@windmill/react-ui'
@@ -37,16 +38,18 @@ const AppToolbar: React.FC<Props> = ({ slideData, currentSlideId }) => {
     setCurrentSlide(slideData[currentSlideId])
   }, [currentSlideId, slideData[currentSlideId]])
 
-  const goNext = () => dispatch(nextSlide())
+  const goNext = () => dispatch(nextSlide(null, true))
 
-  const goPrevious = () => dispatch(previousSlide())
+  const goPrevious = () => dispatch(previousSlide(null, true))
 
   const makeDropdownItems = (data: Slide[]) =>
     data.map((daton: Slide, idx: number) => (
       <DropdownItem
         tag="a"
-        href={`#/${idx}`}
-        className="justify-between"
+        onClick={() => dispatch(setSlide(idx, true))}
+        className={`justify-between ${
+          idx === currentSlideId && 'dark:bg-green-700 bg-orange-500'
+        }`}
         key={`${daton.title}-${idx}-DropdownItem`}
       >
         <span>{daton.title}</span>
@@ -74,7 +77,7 @@ const AppToolbar: React.FC<Props> = ({ slideData, currentSlideId }) => {
             onClick={() => setIsDDOpen(!isDDOpen)}
             aria-haspopup="true"
           >
-            {currentSlide.title}
+            {currentSlideId}
           </Button>
           <Dropdown
             className="z-10 w-full "
