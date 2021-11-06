@@ -67,8 +67,8 @@ const App: React.FC = () => {
                   />
                 </div>
                 <div className="flex justify-center h-full w-full col-span-3 row-span-20">
-                  <div className="prose">
-                    <ReactMarkdown className="dark:text-cool-gray-100 > dark:text-cool-gray-100 dark:text-gray-100">
+                  <div id="markdownContainer" className="prose">
+                    <ReactMarkdown className="children:dark:text-white">
                       {slideData[currentSlideId].notes}
                     </ReactMarkdown>
                   </div>
