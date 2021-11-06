@@ -1,7 +1,12 @@
 import { io } from 'socket.io-client'
 import { Middleware, Dispatch, AnyAction } from 'redux'
 import { store } from '../store'
-import { nextSlide, previousSlide, setSlide } from '../slices/slideShowSlice'
+import {
+  nextSlide,
+  previousSlide,
+  refreshSlides,
+  setSlide
+} from '../slices/slideShowSlice'
 
 const socket = io()
 
@@ -17,9 +22,12 @@ socket.on('action', (msg) => {
     case 'setSlide':
       store.dispatch(setSlide(msg.value, false))
       break
+    case 'slideData':
+      store.dispatch(refreshSlides(msg.data))
+      console.log(msg)
+      break
     default:
       console.log('socket middleware : message type is not listed')
-
       break
   }
 })

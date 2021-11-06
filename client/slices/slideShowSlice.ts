@@ -53,6 +53,9 @@ export const slideshowSlice = createSlice({
         meta: propagate
       })
     },
+    refreshSlides: (state, action: PayloadAction<Slide[]>) => {
+      state.slides = action.payload
+    },
     changeVisibilitySlide: (state, action: PayloadAction<number>) => {
       state.slides[action.payload].visible =
         !state.slides[action.payload].visible
@@ -92,6 +95,7 @@ export const {
   addSlide,
   removeSlide,
   editSlide,
-  resetSlides
+  resetSlides,
+  refreshSlides
 } = slideshowSlice.actions
 export default slideshowSlice.reducer
