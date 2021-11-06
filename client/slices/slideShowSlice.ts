@@ -44,25 +44,43 @@ export const slideshowSlice = createSlice({
     refreshSlides: (state, action: PayloadAction<Slide[]>) => {
       action?.payload && (state.slides = action.payload)
     },
-    changeVisibilitySlide: (state, action: PayloadAction<number>) => {
-      state.slides[action.payload].visible =
-        !state.slides[action.payload].visible
+    changeVisibilitySlide: {
+      reducer: (state, action: PayloadAction<number>) => {
+        state.slides[action.payload].visible =
+          !state.slides[action.payload].visible
+      },
+      prepare: (payload: number, propagate: boolean) => ({
+        payload,
+        meta: propagate
+      })
     },
-    addSlide: (state, action: PayloadAction<Slide>) => {
-      state.slides.push(action.payload)
+    addSlide: {
+      reducer: (state, action: PayloadAction<Slide>) => {
+        state.slides.push(action.payload)
+      },
+      prepare: (payload: Slide, propagate: boolean) => ({
+        payload,
+        meta: propagate
+      })
     },
-    removeSlide: (state) => {
-      if (state.slides.length > 0) {
-        state.slides = state.slides.filter(
-          (val, idx) => idx !== state.currentSlideId
-        )
-        if (state.currentSlideId > state.slides.length - 1) {
-          state.currentSlideId = state.slides.length - 1
+    removeSlide: {
+      reducer: (state, action: PayloadAction<number>) => {
+        if (state.slides.length > 0) {
+          state.slides = state.slides.filter(
+            (val, idx) => idx !== state.currentSlideId
+          )
+          if (state.currentSlideId > state.slides.length - 1) {
+            state.currentSlideId = state.slides.length - 1
+          }
+          if (state.currentSlideId < 0) {
+            state.currentSlideId = 0
+          }
         }
-        if (state.currentSlideId < 0) {
-          state.currentSlideId = 0
-        }
-      }
+      },
+      prepare: (payload: number, propagate: boolean) => ({
+        payload,
+        meta: propagate
+      })
     },
     editSlide: {
       reducer: (state, action: PayloadAction<SingleSlideState>) => {

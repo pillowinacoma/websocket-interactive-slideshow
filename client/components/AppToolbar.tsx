@@ -107,7 +107,7 @@ const AppToolbar: React.FC<Props> = ({ slideData, currentSlideId }) => {
             layout="link"
             icon={currentSlide.visible ? EyeOffIcon : EyeIcon}
             onClick={() => {
-              dispatch(changeVisibilitySlide(currentSlideId))
+              dispatch(changeVisibilitySlide(currentSlideId, true))
             }}
           ></Button>
           <Button
@@ -118,7 +118,7 @@ const AppToolbar: React.FC<Props> = ({ slideData, currentSlideId }) => {
           <Button
             icon={MinusIcon}
             layout="link"
-            onClick={() => dispatch(removeSlide())}
+            onClick={() => dispatch(removeSlide(currentSlideId, true))}
           ></Button>
           <Button
             icon={PlusIcon}

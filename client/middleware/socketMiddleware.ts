@@ -23,6 +23,24 @@ socket.on('action', (msg) => {
 export const actionMiddlleware: Middleware<Dispatch> =
   () => (next) => (action: AnyAction) => {
     if (action.meta) {
+      if (action.type === 'slidesApp/removeSlide') {
+        socket.emit('removeSlide', {
+          type: 'removeSlide',
+          value: action.payload
+        })
+      }
+      if (action.type === 'slidesApp/addSlide') {
+        socket.emit('addSlide', {
+          type: 'addSlide',
+          value: action.payload
+        })
+      }
+      if (action.type === 'slidesApp/changeVisibilitySlide') {
+        socket.emit('changeVisibilitySlide', {
+          type: 'changeVisibilitySlide',
+          value: action.payload
+        })
+      }
       if (action.type === 'slidesApp/editSlide') {
         socket.emit('editSlide', {
           type: 'editSlide',

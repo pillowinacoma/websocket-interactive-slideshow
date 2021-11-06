@@ -117,7 +117,7 @@ const AjouterModal: FC<AjoutModalProps> = ({
                     true
                   )
                 )
-              : dispatch(addSlide(data))
+              : dispatch(addSlide(data, true))
             closeModal()
           })}
           className="w-full sm:w-auto"
