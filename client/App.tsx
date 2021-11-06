@@ -24,24 +24,22 @@ const App: React.FC = () => {
 
   window.onpopstate = (event) => {
     if (window.location.hash.split('/')[2] !== currentSlideId + '') {
-      dispatch(setSlide(Number(window.location.hash.split('/')[2]), true))
+      const slID = Number(window.location.hash.split('/')[2])
+      if (slID || slID === 0) {
+        dispatch(setSlide(slID, true))
+      } else {
+        dispatch(setSlide(0, true))
+      }
     }
   }
   return (
     <div className="app dark:bg-gray-800 bg-gray-300 min-h-screen h-full flex justify-center content-center">
       <HashRouter>
         <Switch>
-          <Route exact path="/">
-            {isMobile ? (
-              <Redirect exact to="/Controll/0" />
-            ) : (
-              <Redirect exact to="/Present/0" />
-            )}
-          </Route>
           <Route exact path="/Present/:slideId">
             <SocketHandler slides={slideData} currentSlideId={currentSlideId} />
           </Route>
-          <Route exact path="/Controll/:slideId">
+          <Route exact path="/Control/:slideId">
             {slideData.length > 0 && currentSlideId !== undefined ? (
               <div className="static grid grid-cols-1 grid-rows-20 gap-0 h-full">
                 <div className=" bottom-0 right-0 left-0">
@@ -65,6 +63,13 @@ const App: React.FC = () => {
                 icon={RefreshIcon}
                 onClick={() => dispatch(resetSlides())}
               />
+            )}
+          </Route>
+          <Route path="*">
+            {isMobile ? (
+              <Redirect exact to="/Control/0" />
+            ) : (
+              <Redirect exact to="/Present/0" />
             )}
           </Route>
         </Switch>
