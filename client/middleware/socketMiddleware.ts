@@ -1,30 +1,18 @@
 import { io } from 'socket.io-client'
 import { Middleware, Dispatch, AnyAction } from 'redux'
 import { store } from '../store'
-import {
-  nextSlide,
-  previousSlide,
-  refreshSlides,
-  setSlide
-} from '../slices/slideShowSlice'
+import { refreshSlides, setSlide } from '../slices/slideShowSlice'
 
 const socket = io()
 
 socket.on('action', (msg) => {
   console.log('ACTION', msg)
   switch (msg.type) {
-    case 'nextSlide':
-      store.dispatch(nextSlide(null))
-      break
-    case 'previousSlide':
-      store.dispatch(previousSlide(null))
-      break
     case 'setSlide':
       store.dispatch(setSlide(msg.value, false))
       break
     case 'slideData':
       store.dispatch(refreshSlides(msg.data))
-      console.log(msg)
       break
     default:
       console.log('socket middleware : message type is not listed')
@@ -35,20 +23,12 @@ socket.on('action', (msg) => {
 export const actionMiddlleware: Middleware<Dispatch> =
   () => (next) => (action: AnyAction) => {
     if (action.meta) {
-      if (action.type === 'slidesApp/nextSlide') {
-        socket.emit('nextSlide', {
-          type: 'nextSlide',
+      if (action.type === 'slidesApp/editSlide') {
+        socket.emit('editSlide', {
+          type: 'editSlide',
           value: action.payload
         })
       }
-
-      if (action.type === 'slidesApp/previousSlide') {
-        socket.emit('previousSlide', {
-          type: 'previousSlide',
-          value: action.payload
-        })
-      }
-
       if (action.type === 'slidesApp/setSlide') {
         socket.emit('setSlide', {
           type: 'setSlide',

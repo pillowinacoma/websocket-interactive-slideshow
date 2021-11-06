@@ -110,11 +110,12 @@ const AjouterModal: FC<AjoutModalProps> = ({
         </Button>
         <Button
           onClick={handleSubmit((data: Slide) => {
-            console.log(data)
-
             slideId !== undefined
               ? dispatch(
-                  editSlide({ id: slideId, slide: data } as SingleSlideState)
+                  editSlide(
+                    { id: slideId, slide: data } as SingleSlideState,
+                    true
+                  )
                 )
               : dispatch(addSlide(data))
             closeModal()

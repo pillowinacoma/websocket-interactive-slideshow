@@ -20,20 +20,16 @@ io.on('connection', (socket) => {
   console.log(`START\t${socket.id}`)
   io.to(socket.id).emit('action', { type: 'slideData', data: data })
 
-  socket.on('nextSlide', (msg) => {
-    console.log(msg)
-    socket.broadcast.emit('action', msg)
-  })
-  socket.on('previousSlide', (msg) => {
-    console.log(msg)
-    socket.broadcast.emit('action', msg)
-  })
-
   socket.on('setSlide', (msg) => {
-    console.log(msg)
     socket.broadcast.emit('action', msg)
   })
 
+  socket.on('editSlide', (msg) => {
+    const editID = msg.value.id
+    const editedSlide = msg.value.slide
+    data[editID] = editedSlide
+    socket.broadcast.emit('action', { type: 'slideData', data: data })
+  })
   socket.on('disconnect', () => {
     console.log(`END\t${socket.id}`)
   })

@@ -42,7 +42,7 @@ export const slideshowSlice = createSlice({
       })
     },
     refreshSlides: (state, action: PayloadAction<Slide[]>) => {
-      state.slides = action.payload
+      action?.payload && (state.slides = action.payload)
     },
     changeVisibilitySlide: (state, action: PayloadAction<number>) => {
       state.slides[action.payload].visible =
@@ -64,8 +64,15 @@ export const slideshowSlice = createSlice({
         }
       }
     },
-    editSlide: (state, action: PayloadAction<SingleSlideState>) => {
-      state.slides[action.payload.id] = action.payload.slide
+    editSlide: {
+      reducer: (state, action: PayloadAction<SingleSlideState>) => {
+        action?.payload &&
+          (state.slides[action.payload.id] = action.payload.slide)
+      },
+      prepare: (payload: SingleSlideState, propagate: boolean) => ({
+        payload,
+        meta: propagate
+      })
     },
     resetSlides: (state) => {
       if (state.slides.length === 0) {
