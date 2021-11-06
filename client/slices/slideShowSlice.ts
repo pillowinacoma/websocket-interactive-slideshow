@@ -24,23 +24,11 @@ export const slideshowSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    nextSlide: {
-      reducer: (state, action: null) => {
-        state.currentSlideId < state.slides.length - 1 && state.currentSlideId++
-      },
-      prepare: (payload: null, propagate: boolean) => ({
-        payload,
-        meta: propagate
-      })
+    nextSlide: (state, action: null) => {
+      state.currentSlideId < state.slides.length - 1 && state.currentSlideId++
     },
-    previousSlide: {
-      reducer: (state, action: null) => {
-        state.currentSlideId > 0 && state.currentSlideId--
-      },
-      prepare: (payload: null, propagate: boolean) => ({
-        payload,
-        meta: propagate
-      })
+    previousSlide: (state, action: null) => {
+      state.currentSlideId > 0 && state.currentSlideId--
     },
     setSlide: {
       reducer: (state, action: PayloadAction<number>) => {

@@ -11,13 +11,13 @@ import {
 const socket = io()
 
 socket.on('action', (msg) => {
-  console.log('MESSAGE', msg)
+  console.log('ACTION', msg)
   switch (msg.type) {
     case 'nextSlide':
-      store.dispatch(nextSlide(null, false))
+      store.dispatch(nextSlide(null))
       break
     case 'previousSlide':
-      store.dispatch(previousSlide(null, false))
+      store.dispatch(previousSlide(null))
       break
     case 'setSlide':
       store.dispatch(setSlide(msg.value, false))
