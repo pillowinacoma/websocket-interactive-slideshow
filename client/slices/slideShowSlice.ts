@@ -35,6 +35,9 @@ export const slideshowSlice = createSlice({
         action.payload < state.slides.length &&
           action.payload >= 0 &&
           (state.currentSlideId = action.payload)
+        if (action.payload >= state.slides.length)
+          state.currentSlideId = state.slides.length - 1
+        if (action.payload < 0) state.currentSlideId = 0
       },
       prepare: (payload: number, propagate: boolean) => ({
         payload,
@@ -92,10 +95,14 @@ export const slideshowSlice = createSlice({
         meta: propagate
       })
     },
-    resetSlides: (state) => {
-      if (state.slides.length === 0) {
-        state.slides = initialSlides
-      }
+    resetSlides: {
+      reducer: (state, action: null) => {
+        console.log('Restting slides')
+      },
+      prepare: (payload: null, propagate: boolean) => ({
+        payload,
+        meta: propagate
+      })
     }
   }
 })

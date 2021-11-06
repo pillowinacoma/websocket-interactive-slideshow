@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect'
 import SocketHandler from './components/SocketTest'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from './store'
-import { Button } from '@windmill/react-ui'
+import { Button, Card, CardBody } from '@windmill/react-ui'
 import { RefreshIcon } from './utils/Icons'
 import { resetSlides, setSlide } from './slices/slideShowSlice'
 
@@ -37,7 +37,24 @@ const App: React.FC = () => {
       <HashRouter>
         <Switch>
           <Route exact path="/Present/:slideId">
-            <SocketHandler slides={slideData} currentSlideId={currentSlideId} />
+            {slideData.length > 0 && currentSlideId !== undefined ? (
+              <SocketHandler
+                slides={slideData}
+                currentSlideId={currentSlideId}
+              />
+            ) : (
+              <Card>
+                <CardBody>
+                  <p className="mb-4 font-semibold text-gray-600 dark:text-gray-300">
+                    Waiting For Slides
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Controller removed all the slides, the server will serve you
+                    some whenever there is ...
+                  </p>
+                </CardBody>
+              </Card>
+            )}
           </Route>
           <Route exact path="/Control/:slideId">
             {slideData.length > 0 && currentSlideId !== undefined ? (
@@ -61,7 +78,7 @@ const App: React.FC = () => {
                 layout="outline"
                 className="justify-self-center place-self-center self-center w-1/2 h-1/2"
                 icon={RefreshIcon}
-                onClick={() => dispatch(resetSlides())}
+                onClick={() => dispatch(resetSlides(null, true))}
               />
             )}
           </Route>

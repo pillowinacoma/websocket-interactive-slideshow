@@ -6,7 +6,7 @@ const app = express()
 const server = http.createServer(app)
 const { Server } = require('socket.io')
 const io = new Server(server)
-let data = require('./data')
+let { data, makeSlides } = require('./data')
 
 const DIST_DIR = path.join(__dirname, '../dist')
 const HTML_FILE = path.join(DIST_DIR, 'index.html')
@@ -27,8 +27,20 @@ io.on('connection', (socket) => {
   socket.on('removeSlide', (msg) => {
     if (data.length > 0 && (msg?.value || msg.value === 0) && data[msg.value]) {
       data = data.filter((val, idx) => idx !== msg.value)
+      if (msg.value > data.length - 1) {
+        socket.broadcast.emit('action', {
+          type: 'setSlide',
+          value: data.length - 1
+        })
+      }
+      if (msg.value < 0) {
+        socket.broadcast.emit('action', {
+          type: 'setSlide',
+          value: 0
+        })
+      }
+      socket.broadcast.emit('action', { type: 'slideData', data: data })
     }
-    socket.broadcast.emit('action', { type: 'slideData', data: data })
   })
   socket.on('addSlide', (msg) => {
     data.push(msg.value)
@@ -44,6 +56,13 @@ io.on('connection', (socket) => {
     data[editID] = editedSlide
     socket.broadcast.emit('action', { type: 'slideData', data: data })
   })
+
+  socket.on('resetSlides', (msg) => {
+    makeSlides(data)
+    io.to(socket.id).emit('action', { type: 'slideData', data: data })
+    socket.broadcast.emit('action', { type: 'slideData', data: data })
+  })
+
   socket.on('disconnect', () => {
     console.log(`END\t${socket.id}`)
   })

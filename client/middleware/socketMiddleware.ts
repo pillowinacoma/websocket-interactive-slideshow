@@ -28,28 +28,29 @@ export const actionMiddlleware: Middleware<Dispatch> =
           type: 'removeSlide',
           value: action.payload
         })
-      }
-      if (action.type === 'slidesApp/addSlide') {
+      } else if (action.type === 'slidesApp/addSlide') {
         socket.emit('addSlide', {
           type: 'addSlide',
           value: action.payload
         })
-      }
-      if (action.type === 'slidesApp/changeVisibilitySlide') {
+      } else if (action.type === 'slidesApp/changeVisibilitySlide') {
         socket.emit('changeVisibilitySlide', {
           type: 'changeVisibilitySlide',
           value: action.payload
         })
-      }
-      if (action.type === 'slidesApp/editSlide') {
+      } else if (action.type === 'slidesApp/editSlide') {
         socket.emit('editSlide', {
           type: 'editSlide',
           value: action.payload
         })
-      }
-      if (action.type === 'slidesApp/setSlide') {
+      } else if (action.type === 'slidesApp/setSlide') {
         socket.emit('setSlide', {
           type: 'setSlide',
+          value: action.payload
+        })
+      } else if (action.type === 'slidesApp/resetSlides') {
+        socket.emit('resetSlides', {
+          type: 'resetSlides',
           value: action.payload
         })
       }
