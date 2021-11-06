@@ -2,7 +2,6 @@ import * as React from 'react'
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
 import AppToolbar from './components/AppToolbar'
 import ThemeToggle from './components/ThemeToggle'
-import SlideShow from './components/SlideShow'
 import { isMobile } from 'react-device-detect'
 import SocketHandler from './components/SocketTest'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,6 +9,7 @@ import { AppDispatch, RootState } from './store'
 import { Button, Card, CardBody } from '@windmill/react-ui'
 import { RefreshIcon } from './utils/Icons'
 import { resetSlides, setSlide } from './slices/slideShowSlice'
+import ReactMarkdown from 'react-markdown'
 
 const App: React.FC = () => {
   const slideData = useSelector((state: RootState) => state.slides)
@@ -67,10 +67,11 @@ const App: React.FC = () => {
                   />
                 </div>
                 <div className="flex justify-center h-full w-full col-span-3 row-span-20">
-                  <SlideShow
-                    slides={slideData}
-                    currentSlideId={currentSlideId}
-                  />
+                  <div className="prose">
+                    <ReactMarkdown className="dark:text-cool-gray-100 > dark:text-cool-gray-100 dark:text-gray-100">
+                      {slideData[currentSlideId].notes}
+                    </ReactMarkdown>
+                  </div>
                 </div>
               </div>
             ) : (

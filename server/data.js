@@ -11,7 +11,7 @@ const makeSlides = (target) => {
       img: `https://www.fillmurray.com/g/${300 + index * 10}/${
         200 + index * 10
       }`,
-      notes: faker.lorem.paragraphs()
+      notes: '# Titre\n- ele\n- ele\n- ele'
     })
   }
 }
