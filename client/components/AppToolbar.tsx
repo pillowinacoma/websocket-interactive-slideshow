@@ -38,9 +38,9 @@ const AppToolbar: React.FC<Props> = ({ slideData, currentSlideId }) => {
     setCurrentSlide(slideData[currentSlideId])
   }, [currentSlideId, slideData[currentSlideId]])
 
-  const goNext = () => dispatch(nextSlide(null, true))
+  const goNext = () => dispatch(nextSlide(null))
 
-  const goPrevious = () => dispatch(previousSlide(null, true))
+  const goPrevious = () => dispatch(previousSlide(null))
 
   const makeDropdownItems = (data: Slide[]) =>
     data.map((daton: Slide, idx: number) => (
