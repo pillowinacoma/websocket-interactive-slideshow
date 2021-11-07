@@ -6,6 +6,11 @@ import SlideShow from './SlideShow'
 interface Props {
   slides: Slide[]
   currentSlideId: number
+  drawing: {
+    clickX: number[]
+    clickY: number[]
+    clickDrag: boolean[]
+  }
 }
 
 const SocketHandler: FC<Props> = (props) => {

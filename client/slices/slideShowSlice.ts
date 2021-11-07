@@ -7,6 +7,7 @@ import { initialSlides } from '../mock/slides'
 export interface SlideShowState {
   currentSlideId: number
   slides: Slide[]
+  drawing: { clickX: number[]; clickY: number[]; clickDrag: boolean[] }
 }
 
 export interface SingleSlideState {
@@ -16,7 +17,8 @@ export interface SingleSlideState {
 
 const initialState: SlideShowState = {
   currentSlideId: 0,
-  slides: initialSlides
+  slides: initialSlides,
+  drawing: { clickX: [], clickY: [], clickDrag: [] }
 }
 
 export const slideshowSlice = createSlice({
@@ -103,6 +105,25 @@ export const slideshowSlice = createSlice({
         payload,
         meta: propagate
       })
+    },
+    addDrawingPoint: (
+      state,
+      action: PayloadAction<{
+        clickX: number[]
+        clickY: number[]
+        clickDrag: boolean[]
+      }>
+    ) => {
+      console.log(action.payload)
+
+      state.drawing.clickX = state.drawing.clickX.concat(action.payload.clickX)
+      state.drawing.clickY = state.drawing.clickY.concat(action.payload.clickY)
+      state.drawing.clickDrag = state.drawing.clickDrag.concat(
+        action.payload.clickDrag
+      )
+    },
+    resetDrawPoints: (state) => {
+      state.drawing = { clickX: [], clickY: [], clickDrag: [] }
     }
   }
 })
@@ -116,6 +137,8 @@ export const {
   removeSlide,
   editSlide,
   resetSlides,
-  refreshSlides
+  refreshSlides,
+  addDrawingPoint,
+  resetDrawPoints
 } = slideshowSlice.actions
 export default slideshowSlice.reducer

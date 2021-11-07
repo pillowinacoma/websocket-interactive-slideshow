@@ -3,7 +3,7 @@ import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
 import AppToolbar from './components/AppToolbar'
 import ThemeToggle from './components/ThemeToggle'
 import { isMobile } from 'react-device-detect'
-import SocketHandler from './components/SocketTest'
+import SocketHandler from './components/SocketHandler'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from './store'
 import { Button, Card, CardBody } from '@windmill/react-ui'
@@ -14,6 +14,7 @@ import ReactMarkdown from 'react-markdown'
 const App: React.FC = () => {
   const slideData = useSelector((state: RootState) => state.slides)
   const currentSlideId = useSelector((state: RootState) => state.currentSlideId)
+  const drawing = useSelector((state: RootState) => state.drawing)
   const dispatch = useDispatch<AppDispatch>()
 
   if (Number(window.location.hash.split('/')[2]) !== currentSlideId) {
@@ -39,6 +40,7 @@ const App: React.FC = () => {
           <Route exact path="/Present/:slideId">
             {slideData.length > 0 && currentSlideId !== undefined ? (
               <SocketHandler
+                drawing={drawing}
                 slides={slideData}
                 currentSlideId={currentSlideId}
               />
