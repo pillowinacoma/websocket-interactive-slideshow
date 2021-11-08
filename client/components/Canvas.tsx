@@ -1,21 +1,23 @@
 import * as React from 'react'
-import { FC, PointerEvent, useRef } from 'react'
-import { useDispatch } from 'react-redux'
-import { addDrawingPoint } from '../slices/slideShowSlice'
-import { AppDispatch } from '../store'
+import { FC, PointerEvent, useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  addDrawingPoint,
+  nextSlide,
+  previousSlide,
+  resetDrawPoints
+} from '../slices/slideShowSlice'
+import { AppDispatch, RootState } from '../store'
+import recognizer from '../onedollar/recognizer'
 
-interface Props {
-  drawing: {
-    clickX: number[]
-    clickY: number[]
-    clickDrag: boolean[]
-  }
-}
-const Canvas: FC<Props> = ({ drawing }) => {
+const Canvas: FC = () => {
+  const drawing = useSelector((state: RootState) => state.drawing)
   const dispatch = useDispatch<AppDispatch>()
-  const clickX = [].concat(drawing.clickX)
-  const clickY = [].concat(drawing.clickY)
-  const clickDrag = [].concat(drawing.clickDrag)
+  let clickX: number[] = []
+  let clickY: number[] = []
+  let clickDrag: boolean[] = []
+  let gesturePoints: [number, number][] = []
+  let gesture: any
   let paint: boolean = false
 
   // Cette ligne permet d'avoir accès à notre canvas après que le composant aie été rendu. Le canvas est alors disponible via refCanvas.current
@@ -26,6 +28,7 @@ const Canvas: FC<Props> = ({ drawing }) => {
     clickX.push(x)
     clickY.push(y)
     clickDrag.push(dragging)
+    if (dragging) gesturePoints.push([x, y])
   }
   const redraw = () => {
     const context = refCanvas.current.getContext('2d')
@@ -53,6 +56,12 @@ const Canvas: FC<Props> = ({ drawing }) => {
       context.stroke()
     }
   }
+  useEffect(() => {
+    clickX = [].concat(drawing.clickX)
+    clickY = [].concat(drawing.clickY)
+    clickDrag = [].concat(drawing.clickDrag)
+    redraw()
+  }, [drawing])
   function pointerDownHandler(ev: PointerEvent<HTMLCanvasElement>) {
     const width = refCanvas.current.getBoundingClientRect().width
     const height = refCanvas.current.getBoundingClientRect().height
@@ -77,12 +86,25 @@ const Canvas: FC<Props> = ({ drawing }) => {
     }
   }
   function pointerUpEvent(ev: PointerEvent<HTMLCanvasElement>) {
+    gesture = recognizer.check(gesturePoints)
+    console.table('gesture', gesture)
+    gesturePoints = []
     paint = false
-    dispatch(addDrawingPoint({ clickX, clickY, clickDrag }))
+    dispatch(addDrawingPoint({ clickX, clickY, clickDrag }, true))
+
+    if (gesture?.recognized) {
+      if (gesture?.name === 'right') {
+        dispatch(nextSlide())
+        dispatch(resetDrawPoints(null, true))
+      } else if (gesture?.name === 'left') {
+        dispatch(previousSlide())
+        dispatch(resetDrawPoints(null, true))
+      }
+    }
   }
   return (
     <canvas
-      className="stroke absolute w-full h-auto"
+      className="stroke absolute w-full h-full z-10"
       ref={refCanvas}
       onPointerDown={pointerDownHandler}
       onPointerMove={pointerMoveHandler}

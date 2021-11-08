@@ -9,31 +9,26 @@ import Canvas from './Canvas'
 interface Props {
   slides: Slide[]
   currentSlideId: number
-  drawing: {
-    clickX: number[]
-    clickY: number[]
-    clickDrag: boolean[]
-  }
 }
 
-const SlideShow: React.FC<Props> = ({ slides, currentSlideId, drawing }) => {
+const SlideShow: React.FC<Props> = ({ slides, currentSlideId }) => {
   const currentSlide = slides[currentSlideId]
   const opacity: string = !currentSlide.visible ? 'opacity-10' : 'opacity-100'
   const dispatch = useDispatch<AppDispatch>()
 
   return (
     <>
-      <div>
+      <div className="z-20">
         <Button
           layout="outline"
-          className="w-full h-auto"
-          onClick={() => dispatch(resetDrawPoints())}
+          className="w-full h-16"
+          onClick={() => dispatch(resetDrawPoints(null, true))}
         >
           Effacer
         </Button>
         <Button
           layout="outline"
-          className="w-full h-auto"
+          className="w-full h-16"
           onClick={() => {
             if (document.fullscreenElement) {
               document.exitFullscreen()
@@ -48,7 +43,7 @@ const SlideShow: React.FC<Props> = ({ slides, currentSlideId, drawing }) => {
       <div
         className={`p-10 flex justify-center w-screen  items-center ${opacity}`}
       >
-        <Card className="relative w-4/5">
+        <Card className="relative w-4/5 z-0">
           <div className="carousel bg-gray-300 dark:bg-gray-800">
             <p className="mb-4 font-semibold text-cool-gray-600 dark:text-gray-300 flex justify-center text-3xl">
               {currentSlide.title}
@@ -63,7 +58,7 @@ const SlideShow: React.FC<Props> = ({ slides, currentSlideId, drawing }) => {
             </CardBody>
           </div>
         </Card>
-        <Canvas drawing={drawing} />
+        <Canvas />
       </div>
     </>
   )

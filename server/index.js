@@ -63,6 +63,16 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('action', { type: 'slideData', data: data })
   })
 
+  socket.on('addDrawingPoint', (msg) => {
+    socket.broadcast.emit('action', {
+      type: 'addDrawingPoint',
+      data: msg.value
+    })
+  })
+  socket.on('resetDrawPoints', (msg) => {
+    socket.broadcast.emit('action', { type: 'resetDrawPoints' })
+  })
+
   socket.on('disconnect', () => {
     console.log(`END\t${socket.id}`)
   })

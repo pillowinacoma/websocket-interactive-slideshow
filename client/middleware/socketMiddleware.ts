@@ -1,13 +1,24 @@
 import { io } from 'socket.io-client'
 import { Middleware, Dispatch, AnyAction } from 'redux'
 import { store } from '../store'
-import { refreshSlides, setSlide } from '../slices/slideShowSlice'
+import {
+  addDrawingPoint,
+  refreshSlides,
+  resetDrawPoints,
+  setSlide
+} from '../slices/slideShowSlice'
 
 const socket = io()
 
 socket.on('action', (msg) => {
   console.log('ACTION', msg)
   switch (msg.type) {
+    case 'addDrawingPoint':
+      store.dispatch(addDrawingPoint(msg.data, false))
+      break
+    case 'resetDrawPoints':
+      store.dispatch(resetDrawPoints(null, false))
+      break
     case 'setSlide':
       store.dispatch(setSlide(msg.value, false))
       break
@@ -53,6 +64,13 @@ export const actionMiddlleware: Middleware<Dispatch> =
           type: 'resetSlides',
           value: action.payload
         })
+      } else if (action.type === 'slidesApp/addDrawingPoint') {
+        socket.emit('addDrawingPoint', {
+          type: 'addDrawingPoint',
+          value: action.payload
+        })
+      } else if (action.type === 'slidesApp/resetDrawPoints') {
+        socket.emit('resetDrawPoints', { type: 'resetDrawPoints' })
       }
     }
     return next(action)

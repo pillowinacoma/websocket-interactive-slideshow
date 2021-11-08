@@ -26,10 +26,10 @@ export const slideshowSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    nextSlide: (state, action: null) => {
+    nextSlide: (state) => {
       state.currentSlideId < state.slides.length - 1 && state.currentSlideId++
     },
-    previousSlide: (state, action: null) => {
+    previousSlide: (state) => {
       state.currentSlideId > 0 && state.currentSlideId--
     },
     setSlide: {
@@ -106,24 +106,45 @@ export const slideshowSlice = createSlice({
         meta: propagate
       })
     },
-    addDrawingPoint: (
-      state,
-      action: PayloadAction<{
-        clickX: number[]
-        clickY: number[]
-        clickDrag: boolean[]
-      }>
-    ) => {
-      console.log(action.payload)
-
-      state.drawing.clickX = state.drawing.clickX.concat(action.payload.clickX)
-      state.drawing.clickY = state.drawing.clickY.concat(action.payload.clickY)
-      state.drawing.clickDrag = state.drawing.clickDrag.concat(
-        action.payload.clickDrag
-      )
+    addDrawingPoint: {
+      reducer: (
+        state,
+        action: PayloadAction<{
+          clickX: number[]
+          clickY: number[]
+          clickDrag: boolean[]
+        }>
+      ) => {
+        state.drawing.clickX = state.drawing.clickX.concat(
+          action.payload.clickX
+        )
+        state.drawing.clickY = state.drawing.clickY.concat(
+          action.payload.clickY
+        )
+        state.drawing.clickDrag = state.drawing.clickDrag.concat(
+          action.payload.clickDrag
+        )
+      },
+      prepare: (
+        payload: {
+          clickX: number[]
+          clickY: number[]
+          clickDrag: boolean[]
+        },
+        propagate: boolean
+      ) => ({
+        payload,
+        meta: propagate
+      })
     },
-    resetDrawPoints: (state) => {
-      state.drawing = { clickX: [], clickY: [], clickDrag: [] }
+    resetDrawPoints: {
+      reducer: (state, action: null) => {
+        state.drawing = { clickX: [], clickY: [], clickDrag: [] }
+      },
+      prepare: (payload: null, propagate: boolean) => ({
+        payload,
+        meta: propagate
+      })
     }
   }
 })
