@@ -17,18 +17,18 @@ const SlideShow: React.FC<Props> = ({ slides, currentSlideId }) => {
   const dispatch = useDispatch<AppDispatch>()
 
   return (
-    <>
-      <div className="z-20">
+    <div className="w-screen h-screen grid grid-cols-1 grid-rows-20">
+      <div className="z-50">
         <Button
           layout="outline"
-          className="w-full h-16"
+          className="w-1/2 z-50"
           onClick={() => dispatch(resetDrawPoints(null, true))}
         >
           Effacer
         </Button>
         <Button
           layout="outline"
-          className="w-full h-16"
+          className="w-1/2 z-50"
           onClick={() => {
             if (document.fullscreenElement) {
               document.exitFullscreen()
@@ -41,7 +41,7 @@ const SlideShow: React.FC<Props> = ({ slides, currentSlideId }) => {
         </Button>
       </div>
       <div
-        className={`p-10 flex justify-center w-screen  items-center ${opacity}`}
+        className={`p-10 flex justify-center w-screen z-0 row-span-full h-auto items-center ${opacity}`}
       >
         <Card className="relative w-4/5 z-0">
           <div className="carousel bg-gray-300 dark:bg-gray-800">
@@ -60,7 +60,7 @@ const SlideShow: React.FC<Props> = ({ slides, currentSlideId }) => {
         </Card>
         <Canvas />
       </div>
-    </>
+    </div>
   )
 }
 export default SlideShow

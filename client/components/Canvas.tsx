@@ -87,7 +87,7 @@ const Canvas: FC = () => {
   }
   function pointerUpEvent(ev: PointerEvent<HTMLCanvasElement>) {
     gesture = recognizer.check(gesturePoints)
-    console.table('gesture', gesture)
+    console.log('gesture', gesture)
     gesturePoints = []
     paint = false
     dispatch(addDrawingPoint({ clickX, clickY, clickDrag }, true))
@@ -104,7 +104,7 @@ const Canvas: FC = () => {
   }
   return (
     <canvas
-      className="stroke absolute w-full h-full z-10"
+      className="stroke absolute w-full h-full z-0"
       ref={refCanvas}
       onPointerDown={pointerDownHandler}
       onPointerMove={pointerMoveHandler}
