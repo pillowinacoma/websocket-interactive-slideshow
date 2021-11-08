@@ -585,4 +585,5 @@ recognizer.add('left', [
   [0.3930722891566265, 0.5859375],
   [0.3930722891566265, 0.5859375]
 ])
+
 export default recognizer

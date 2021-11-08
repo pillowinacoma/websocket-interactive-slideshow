@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { resetDrawPoints } from '../slices/slideShowSlice'
 import { AppDispatch } from '../store'
 import { Slide } from '../type'
-import Canvas from './Canvas'
+import DrawingCanvas from './DrawingCanvas'
 
 interface Props {
   slides: Slide[]
@@ -58,7 +58,7 @@ const SlideShow: React.FC<Props> = ({ slides, currentSlideId }) => {
             </CardBody>
           </div>
         </Card>
-        <Canvas />
+        <DrawingCanvas />
       </div>
     </div>
   )

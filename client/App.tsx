@@ -10,6 +10,7 @@ import { Button, Card, CardBody } from '@windmill/react-ui'
 import { RefreshIcon } from './utils/Icons'
 import { resetSlides, setSlide } from './slices/slideShowSlice'
 import ReactMarkdown from 'react-markdown'
+import ActionCanvas from './components/ActionCanvas'
 
 const App: React.FC = () => {
   const slideData = useSelector((state: RootState) => state.slides)
@@ -72,6 +73,7 @@ const App: React.FC = () => {
                       {slideData[currentSlideId].notes}
                     </ReactMarkdown>
                   </div>
+                  <ActionCanvas />
                 </div>
               </div>
             ) : (

@@ -1,23 +1,15 @@
 import * as React from 'react'
 import { FC, PointerEvent, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  addDrawingPoint,
-  nextSlide,
-  previousSlide,
-  resetDrawPoints
-} from '../slices/slideShowSlice'
+import { addDrawingPoint } from '../slices/slideShowSlice'
 import { AppDispatch, RootState } from '../store'
-import recognizer from '../onedollar/recognizer'
 
-const Canvas: FC = () => {
+const DrawingCanvas: FC = () => {
   const drawing = useSelector((state: RootState) => state.drawing)
   const dispatch = useDispatch<AppDispatch>()
   let clickX: number[] = []
   let clickY: number[] = []
   let clickDrag: boolean[] = []
-  let gesturePoints: [number, number][] = []
-  let gesture: any
   let paint: boolean = false
 
   // Cette ligne permet d'avoir accès à notre canvas après que le composant aie été rendu. Le canvas est alors disponible via refCanvas.current
@@ -28,7 +20,6 @@ const Canvas: FC = () => {
     clickX.push(x)
     clickY.push(y)
     clickDrag.push(dragging)
-    if (dragging) gesturePoints.push([x, y])
   }
   const redraw = () => {
     const context = refCanvas.current.getContext('2d')
@@ -86,21 +77,8 @@ const Canvas: FC = () => {
     }
   }
   function pointerUpEvent(ev: PointerEvent<HTMLCanvasElement>) {
-    gesture = recognizer.check(gesturePoints)
-    console.log('gesture', gesture)
-    gesturePoints = []
     paint = false
     dispatch(addDrawingPoint({ clickX, clickY, clickDrag }, true))
-
-    if (gesture?.recognized) {
-      if (gesture?.name === 'right') {
-        dispatch(nextSlide())
-        dispatch(resetDrawPoints(null, true))
-      } else if (gesture?.name === 'left') {
-        dispatch(previousSlide())
-        dispatch(resetDrawPoints(null, true))
-      }
-    }
   }
   return (
     <canvas
@@ -112,4 +90,4 @@ const Canvas: FC = () => {
     ></canvas>
   )
 }
-export default Canvas
+export default DrawingCanvas
