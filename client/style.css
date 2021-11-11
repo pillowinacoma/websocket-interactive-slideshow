@@ -5,3 +5,6 @@
 #markdownContainer * {
   @apply dark:text-gray-100;
 }
+canvas {
+  touch-action: none;
+}
