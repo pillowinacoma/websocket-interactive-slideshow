@@ -1,9 +1,9 @@
 {
-  "name": "sbaai_tiw8",
+  "name": "tiw8_tp_grp10",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://forge.univ-lyon1.fr/p1807434/sbaai_tiw8.git",
-  "author": "Aziz <abdelazizsbaai@gmail.com>",
+  "repository": "https://forge.univ-lyon1.fr/p1807434/tiw8-tp2.git",
+  "author": "SBAAI Adbelaziz & BOUGE Yoann",
   "license": "MIT",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",

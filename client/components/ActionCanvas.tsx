@@ -99,7 +99,7 @@ const ActionCanvas: FC = () => {
   }
   return (
     <canvas
-      className="stroke absolute w-full h-auto"
+      className="stroke absolute w-full h-4/5"
       ref={refCanvas}
       onPointerDown={pointerDownHandler}
       onPointerMove={pointerMoveHandler}

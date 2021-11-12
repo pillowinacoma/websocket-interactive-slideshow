@@ -34,7 +34,7 @@ const App: React.FC = () => {
     }
   }
   return (
-    <div className="app dark:bg-gray-800 bg-gray-300 min-h-screen h-full flex justify-center content-center">
+    <div className="app dark:bg-gray-800 bg-gray-300 min-h-screen h-full justify-center content-center">
       <HashRouter>
         <Switch>
           <Route exact path="/Present/:slideId">
@@ -68,7 +68,7 @@ const App: React.FC = () => {
                   />
                 </div>
                 <div className="flex justify-center h-full w-full col-span-3 row-span-20">
-                  <div id="markdownContainer" className="prose">
+                  <div id="markdownContainer" className="prose w-full m-7">
                     <ReactMarkdown className="children:dark:text-white">
                       {slideData[currentSlideId].notes}
                     </ReactMarkdown>
