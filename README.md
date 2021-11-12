@@ -19,7 +19,7 @@ L’objectif du TP est de mettre en place “l’enveloppe” d’une applicatio
 L’objectif du TP est de mettre en place une Single Page Application (SPA) permettant de créer et contrôler des présentations. Elle sera développée principalement côté client avec React, avec un serveur Node/Express léger. Le serveur sera codé en JavaScript, le client en TypeScript.
 
 
-Après avoir mit en place un store, nous avons un implémenté un middleware qui permet de mettre à jour l'état du store et de diffuser la mise à jour à tous les devices connectés. 
+Après avoir mit en place un store et un serveur websocket, nous avons un implémenté un middleware qui permet de diffuser les changements de l'état du store aux devices distants. 
 
 Dans ce TP nous avons séparé **l'affichage** et **le controle de la présentation** en 2 routes différentes.
  
