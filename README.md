@@ -16,6 +16,9 @@ L’objectif du TP est de mettre en place “l’enveloppe” d’une applicatio
 ## TP2 :
 
 ### TLDR :
+[lien Heroku](https://obscure-beach-17514.herokuapp.com/)
+
+[lien git](https://forge.univ-lyon1.fr/p1807434/tiw8-tp2.git)
 
 - TP2.1 :
   - Functionnal commponents
