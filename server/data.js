@@ -11,7 +11,11 @@ const makeSlides = (target) => {
       img: `https://www.fillmurray.com/g/${300 + index * 10}/${
         200 + index * 10
       }`,
-      notes: `# Titre ${index} \n Ces notes sont en **markdown**\n- ${faker.lorem.lines(1)}\n- ${faker.lorem.lines(1)}\n- ${faker.lorem.lines(1)}\n\n >Remarque : ${faker.lorem.words(3)}` 
+      notes: `# Note ${index} \n Ces notes sont en **markdown**\n- ${faker.lorem.lines(
+        1
+      )}\n- ${faker.lorem.lines(1)}\n- ${faker.lorem.lines(
+        1
+      )}\n\n >Remarque : ${faker.lorem.words(3)}`
     })
   }
 }
