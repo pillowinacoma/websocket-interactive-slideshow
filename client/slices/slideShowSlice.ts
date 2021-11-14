@@ -34,12 +34,14 @@ export const slideshowSlice = createSlice({
     },
     setSlide: {
       reducer: (state, action: PayloadAction<number>) => {
+        const res: SlideShowState = state
         action.payload < state.slides.length &&
           action.payload >= 0 &&
-          (state.currentSlideId = action.payload)
+          (res.currentSlideId = action.payload)
         if (action.payload >= state.slides.length)
-          state.currentSlideId = state.slides.length - 1
-        if (action.payload < 0) state.currentSlideId = 0
+          res.currentSlideId = state.slides.length - 1
+        if (action.payload < 0) res.currentSlideId = 0
+        return res
       },
       prepare: (payload: number, propagate: boolean) => ({
         payload,
@@ -47,12 +49,15 @@ export const slideshowSlice = createSlice({
       })
     },
     refreshSlides: (state, action: PayloadAction<Slide[]>) => {
-      action?.payload && (state.slides = action.payload)
+      const res: SlideShowState = state
+      action?.payload && (res.slides = action.payload)
+      return res
     },
     changeVisibilitySlide: {
       reducer: (state, action: PayloadAction<number>) => {
-        state.slides[action.payload].visible =
-          !state.slides[action.payload].visible
+        const res: SlideShowState = state
+        res.slides[action.payload].visible = !res.slides[action.payload].visible
+        return res
       },
       prepare: (payload: number, propagate: boolean) => ({
         payload,
@@ -61,7 +66,9 @@ export const slideshowSlice = createSlice({
     },
     addSlide: {
       reducer: (state, action: PayloadAction<Slide>) => {
-        state.slides.push(action.payload)
+        const res: SlideShowState = state
+        res.slides.push(action.payload)
+        return res
       },
       prepare: (payload: Slide, propagate: boolean) => ({
         payload,
@@ -70,17 +77,19 @@ export const slideshowSlice = createSlice({
     },
     removeSlide: {
       reducer: (state, action: PayloadAction<number>) => {
+        const res: SlideShowState = state
         if (state.slides.length > 0) {
-          state.slides = state.slides.filter(
+          res.slides = state.slides.filter(
             (val, idx) => idx !== state.currentSlideId
           )
           if (state.currentSlideId > state.slides.length - 1) {
-            state.currentSlideId = state.slides.length - 1
+            res.currentSlideId = state.slides.length - 1
           }
           if (state.currentSlideId < 0) {
-            state.currentSlideId = 0
+            res.currentSlideId = 0
           }
         }
+        return res
       },
       prepare: (payload: number, propagate: boolean) => ({
         payload,
@@ -89,8 +98,10 @@ export const slideshowSlice = createSlice({
     },
     editSlide: {
       reducer: (state, action: PayloadAction<SingleSlideState>) => {
+        const res: SlideShowState = state
         action?.payload &&
-          (state.slides[action.payload.id] = action.payload.slide)
+          (res.slides[action.payload.id] = action.payload.slide)
+        return res
       },
       prepare: (payload: SingleSlideState, propagate: boolean) => ({
         payload,
@@ -115,15 +126,13 @@ export const slideshowSlice = createSlice({
           clickDrag: boolean[]
         }>
       ) => {
-        state.drawing.clickX = state.drawing.clickX.concat(
-          action.payload.clickX
-        )
-        state.drawing.clickY = state.drawing.clickY.concat(
-          action.payload.clickY
-        )
-        state.drawing.clickDrag = state.drawing.clickDrag.concat(
+        const res: SlideShowState = state
+        res.drawing.clickX = res.drawing.clickX.concat(action.payload.clickX)
+        res.drawing.clickY = res.drawing.clickY.concat(action.payload.clickY)
+        res.drawing.clickDrag = res.drawing.clickDrag.concat(
           action.payload.clickDrag
         )
+        return res
       },
       prepare: (
         payload: {
@@ -139,7 +148,9 @@ export const slideshowSlice = createSlice({
     },
     resetDrawPoints: {
       reducer: (state, action: null) => {
-        state.drawing = { clickX: [], clickY: [], clickDrag: [] }
+        const res: SlideShowState = state
+        res.drawing = { clickX: [], clickY: [], clickDrag: [] }
+        return res
       },
       prepare: (payload: null, propagate: boolean) => ({
         payload,
